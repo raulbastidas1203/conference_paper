@@ -149,7 +149,7 @@ def process_updates(state, token, chat_id):
         if chat_id and str(chat.get('id')) != str(chat_id):
             continue
         text = msg.get('text')
-        if not text:
+        if not text or text.strip() == '/start':
             continue
         append_jsonl(INBOX_PATH, {
             'ts': int(time.time()),

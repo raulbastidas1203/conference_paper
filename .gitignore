@@ -1,3 +1,5 @@
 telecodex/config/telegram.settings.json
 telecodex/logs/
 telecodex/.env
+telecodex/runtime/*.pid
+telecodex/.cursor-telegram/

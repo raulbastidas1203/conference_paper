@@ -146,6 +146,22 @@ bash scripts/notify_status.sh waiting 'Necesito confirmación para cambiar confi
 bash scripts/notify_status.sh done 'Terminé la tarea'
 ```
 
+### Correr telecodex como servicio simple de usuario
+
+```bash
+bash scripts/start_telecodex.sh
+bash scripts/status_telecodex.sh
+bash scripts/stop_telecodex.sh
+```
+
+Esto deja corriendo en background:
+- `watcher.py`
+- `inbox_sync_loop.py`
+
+Logs:
+- `logs/watcher.log`
+- `logs/inbox_sync.log`
+
 La idea es simple:
 - cualquier proceso local escribe eventos en `events.jsonl`
 - el watcher los resume y los manda por Telegram

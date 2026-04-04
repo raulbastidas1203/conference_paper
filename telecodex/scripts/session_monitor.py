@@ -112,7 +112,6 @@ def tick():
             elif ev['kind'] == 'needs_decision':
                 append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} está esperando una decisión o aprobación.\n\nDetalle:\n{ev["raw"][:1400]}'})
             elif ev['kind'] == 'needs_user_reply':
-                subprocess.run([sys.executable, str(REQUEST_UI)], check=False)
                 from request_ui import emit_request
                 emit_request(str(chat_id), alias, ev['raw'])
             elif ev['kind'] == 'task_complete':

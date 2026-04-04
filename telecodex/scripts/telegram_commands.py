@@ -14,6 +14,7 @@ OUTBOX = RUNTIME / 'outbox.jsonl'
 CODEX_SESSIONS = RUNTIME / 'codex_sessions.json'
 PENDING = RUNTIME / 'pending_codex_actions.json'
 MONITORS = RUNTIME / 'session_monitors.json'
+PENDING_UI = RUNTIME / 'pending_ui_requests.json'
 SEND_CODEX = BASE_DIR / 'scripts' / 'send_codex_message.py'
 SEND_CODEX_FRESH = BASE_DIR / 'scripts' / 'send_codex_fresh.py'
 STATE = RUNTIME / 'command_state.json'
@@ -91,6 +92,19 @@ def load_monitors():
 
 def save_monitors(data):
     MONITORS.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
+
+
+def load_pending_ui():
+    if PENDING_UI.exists():
+        try:
+            return json.loads(PENDING_UI.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    return {}
+
+
+def save_pending_ui(data):
+    PENDING_UI.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
 
 
 def normalize_text(text: str) -> str:
@@ -224,6 +238,25 @@ def main():
             state['last_inbox_line'] += 1
             continue
         text = item.get('text', '').strip()
+        chat_id = str(item.get('chat_id'))
+        pending_ui = load_pending_ui()
+        ui = pending_ui.get(chat_id)
+        if ui:
+            selected = None
+            for opt in ui.get('options', []):
+                if text.strip() == opt.get('label'):
+                    selected = opt
+                    break
+            if selected:
+                append(OUTBOX, {
+                    'kind': 'reply',
+                    'chat_id': chat_id,
+                    'text': f"Elegiste: {selected['label']}\n\nDescripción: {selected.get('description') or '-'}\nValor: {selected.get('value')}\n\nAún falta reenviar esta opción al hilo correcto de Codex.",
+                })
+                pending_ui.pop(chat_id, None)
+                save_pending_ui(pending_ui)
+                state['last_inbox_line'] += 1
+                continue
         reply = handle_command(text)
         if isinstance(reply, str) and reply:
             append(OUTBOX, {

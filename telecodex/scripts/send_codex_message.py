@@ -62,10 +62,11 @@ def main():
     LOGS.mkdir(parents=True, exist_ok=True)
     output_file = LOGS / f'codex-last-{session_id}.txt'
     cmd = [
-        str(CODEX_BIN), 'exec', 'resume', session_id, '-',
+        str(CODEX_BIN),
+        '-C', str(WORKDIR),
+        'exec', 'resume', session_id, '-',
         '--json',
         '--dangerously-bypass-approvals-and-sandbox',
-        '-C', str(WORKDIR),
         '-o', str(output_file),
     ]
 

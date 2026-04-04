@@ -55,6 +55,13 @@ def load_codex_sessions():
         return []
 
 
+def resolve_codex_session(alias: str):
+    for s in load_codex_sessions():
+        if s.get('alias') == alias:
+            return s
+    return None
+
+
 def handle_command(text: str):
     t = text.strip()
     if t == '/status':
@@ -83,7 +90,8 @@ def handle_command(text: str):
             return 'No encontré sesiones de Codex indexadas.'
         lines = ['Sesiones Codex recientes:']
         for s in sessions[:8]:
-            lines.append(f"- {s['alias']}: {s['thread_name']} ({s.get('updated_at','sin fecha')})")
+            badge = ' [riesgoso]' if s.get('risky') else ''
+            lines.append(f"- {s['alias']}: {s['thread_name']}{badge} ({s.get('updated_at','sin fecha')})")
         return '\n'.join(lines)
     if t.startswith('/codex '):
         parts = t.split(' ', 2)
@@ -91,6 +99,11 @@ def handle_command(text: str):
             return 'Uso: /codex C1 tu mensaje'
         alias = parts[1].strip().upper()
         message = parts[2].strip()
+        sess = resolve_codex_session(alias)
+        if not sess:
+            return f'No encontré la sesión {alias}. Usa /chats.'
+        if sess.get('risky'):
+            return f'Bloqueé {alias} porque parece una sesión sensible del bridge/setup. Usa otra sesión.'
         return {'action': 'codex_send', 'alias': alias, 'message': message}
     return None
 

@@ -1,142 +1,142 @@
 [
   {
     "alias": "C1",
-    "id": "019d5609-5bbb-7dd2-b676-06bcea36bdef",
-    "thread_name": "Explica uso del repo",
-    "updated_at": "2026-04-04T01:09:18.818573005Z",
-    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-09-07-019d5609-5bbb-7dd2-b676-06bcea36bdef.jsonl"
+    "id": "019d5680-cb53-7c73-a189-6ccc314a2653",
+    "thread_name": "Instala VS Code en Ubuntu",
+    "updated_at": "2026-04-04T03:19:48.705669149Z",
+    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T22-19-34-019d5680-cb53-7c73-a189-6ccc314a2653.jsonl"
   },
   {
     "alias": "C2",
-    "id": "019d560a-516c-70c1-b744-6fe487976457",
-    "thread_name": "Buscar SOTA loco-manipulación",
-    "updated_at": "2026-04-04T01:10:28.484647676Z",
-    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-10-10-019d560a-516c-70c1-b744-6fe487976457.jsonl"
-  },
-  {
-    "alias": "C3",
     "id": "019d54a3-c532-7232-b0b1-c9675378c31c",
     "thread_name": "Instala y valida OpenClaw",
     "updated_at": "2026-04-03T18:38:38.649646434Z",
     "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T13-38-32-019d54a3-c532-7232-b0b1-c9675378c31c.jsonl"
   },
   {
+    "alias": "C3",
+    "id": "019d5609-5bbb-7dd2-b676-06bcea36bdef",
+    "thread_name": "Explica uso del repo",
+    "updated_at": "2026-04-04T01:09:18.818573005Z",
+    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-09-07-019d5609-5bbb-7dd2-b676-06bcea36bdef.jsonl"
+  },
+  {
     "alias": "C4",
+    "id": "019d560a-516c-70c1-b744-6fe487976457",
+    "thread_name": "Buscar SOTA loco-manipulación",
+    "updated_at": "2026-04-04T01:10:28.484647676Z",
+    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-10-10-019d560a-516c-70c1-b744-6fe487976457.jsonl"
+  },
+  {
+    "alias": "C5",
     "id": "019d49c6-8d0d-73d3-882f-696cc77d8cda",
     "thread_name": "Identifica piezas azules y grises",
     "updated_at": "2026-04-01T16:01:30.061830061Z",
     "file": "/home/raul/.codex/sessions/2026/04/01/rollout-2026-04-01T11-00-42-019d49c6-8d0d-73d3-882f-696cc77d8cda.jsonl"
   },
   {
-    "alias": "C5",
+    "alias": "C6",
     "id": "019d3668-b5df-7762-9193-a24c7e011c8e",
     "thread_name": "Documenta pipeline de baile RL",
     "updated_at": "2026-03-28T21:46:29.872620409Z",
     "file": "/home/raul/.codex/sessions/2026/03/28/rollout-2026-03-28T16-45-25-019d3668-b5df-7762-9193-a24c7e011c8e.jsonl"
   },
   {
-    "alias": "C6",
+    "alias": "C7",
     "id": "019d30e6-fe13-7161-b324-1746ea120f4e",
     "thread_name": "Clona e instala video2robot",
     "updated_at": "2026-03-27T20:07:18.713427208Z",
     "file": "/home/raul/.codex/sessions/2026/03/27/rollout-2026-03-27T15-05-37-019d30e6-fe13-7161-b324-1746ea120f4e.jsonl"
   },
   {
-    "alias": "C7",
+    "alias": "C8",
     "id": "019d0bc6-f50c-7ff2-aff0-b87fd8f23c2f",
     "thread_name": "Document G1 teach-repeat safeguards",
     "updated_at": "2026-03-20T15:04:45.027103188Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f50c-7ff2-aff0-b87fd8f23c2f.jsonl"
   },
   {
-    "alias": "C8",
+    "alias": "C9",
     "id": "019d0bc6-f4e5-7060-8362-db6b4d8f4f0c",
     "thread_name": "Inspect G1 upper-body APIs",
     "updated_at": "2026-03-20T15:04:45.093790659Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f4e5-7060-8362-db6b4d8f4f0c.jsonl"
   },
   {
-    "alias": "C9",
+    "alias": "C10",
     "id": "019d0bc6-f4f1-7c13-98f3-7fcf37e1d6bf",
     "thread_name": "Design upper-body recorder",
     "updated_at": "2026-03-20T15:04:44.080828729Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f4f1-7c13-98f3-7fcf37e1d6bf.jsonl"
   },
   {
-    "alias": "C10",
+    "alias": "C11",
     "id": "019d0bc6-f51a-7b31-ad64-da71acc66a2b",
     "thread_name": "Define record replay test criteria",
     "updated_at": "2026-03-20T15:04:44.084088907Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f51a-7b31-ad64-da71acc66a2b.jsonl"
   },
   {
-    "alias": "C11",
+    "alias": "C12",
     "id": "019d0bc6-f4fe-7bf1-939d-7f2ad38b1dc1",
     "thread_name": "Design upper-body replay engine",
     "updated_at": "2026-03-20T15:04:43.515248422Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f4fe-7bf1-939d-7f2ad38b1dc1.jsonl"
   },
   {
-    "alias": "C12",
+    "alias": "C13",
     "id": "019d0bc6-f52f-7e71-a40b-42b5d03b8800",
     "thread_name": "Design docs package for teach-repeat",
     "updated_at": "2026-03-20T15:04:45.023892735Z",
     "file": "/home/raul/.codex/sessions/2026/03/20/rollout-2026-03-20T10-04-41-019d0bc6-f52f-7e71-a40b-42b5d03b8800.jsonl"
   },
   {
-    "alias": "C13",
+    "alias": "C14",
     "id": "019cfccd-153f-7d00-b955-d4d2519a6f0f",
     "thread_name": "Escribe mapa del repo en docs",
     "updated_at": "2026-03-17T17:17:07.054567491Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-17-04-019cfccd-153f-7d00-b955-d4d2519a6f0f.jsonl"
   },
   {
-    "alias": "C14",
+    "alias": "C15",
     "id": "019cfccc-2f0a-7972-97ac-01da5a81c179",
     "thread_name": "Añadir exportación future-safe SDK2",
     "updated_at": "2026-03-17T17:16:08.361402427Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-16-05-019cfccc-2f0a-7972-97ac-01da5a81c179.jsonl"
   },
   {
-    "alias": "C15",
+    "alias": "C16",
     "id": "019cfccb-f246-72f1-b586-47c3680b4e90",
     "thread_name": "Implementar simulación Subagente 4",
     "updated_at": "2026-03-17T17:15:52.586856904Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-15-50-019cfccb-f246-72f1-b586-47c3680b4e90.jsonl"
   },
   {
-    "alias": "C16",
+    "alias": "C17",
     "id": "019cfccb-f23a-7662-b9d6-c13b233e6f93",
     "thread_name": "Implementa modos adapta G1",
     "updated_at": "2026-03-17T17:15:53.020366932Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-15-50-019cfccb-f23a-7662-b9d6-c13b233e6f93.jsonl"
   },
   {
-    "alias": "C17",
+    "alias": "C18",
     "id": "019cfccb-f251-7823-a343-99d8656e0743",
     "thread_name": "Implementar métricas clips y ranking",
     "updated_at": "2026-03-17T17:15:52.641031373Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-15-50-019cfccb-f251-7823-a343-99d8656e0743.jsonl"
   },
   {
-    "alias": "C18",
+    "alias": "C19",
     "id": "019cfccb-f22e-7422-8780-d609940dabca",
     "thread_name": "Implementa loaders y mapping",
     "updated_at": "2026-03-17T17:15:52.735680633Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-15-50-019cfccb-f22e-7422-8780-d609940dabca.jsonl"
   },
   {
-    "alias": "C19",
+    "alias": "C20",
     "id": "019cfccb-7a64-7210-9d8d-cd9bb1dde2ba",
     "thread_name": "Documentar estado y mapa del repo",
     "updated_at": "2026-03-17T17:15:22.635532016Z",
     "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-15-19-019cfccb-7a64-7210-9d8d-cd9bb1dde2ba.jsonl"
-  },
-  {
-    "alias": "C20",
-    "id": "019cfcc9-8f8b-7d81-815c-ec74d61b7221",
-    "thread_name": "Documenta mapa y arquitectura repo",
-    "updated_at": "2026-03-17T17:13:16.635300219Z",
-    "file": "/home/raul/.codex/sessions/2026/03/17/rollout-2026-03-17T12-13-13-019cfcc9-8f8b-7d81-815c-ec74d61b7221.jsonl"
   }
 ]

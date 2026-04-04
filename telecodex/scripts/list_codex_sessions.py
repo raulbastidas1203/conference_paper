@@ -45,12 +45,18 @@ def load_index_sessions():
         file_mtime = file_path.stat().st_mtime if file_path and file_path.exists() else 0.0
         updated_at = item.get('updated_at') or ''
         updated_ts = parse_ts(updated_at)
+        thread_name = item.get('thread_name') or '(sin título)'
+        lowered = thread_name.lower()
+        risky = any(k in lowered for k in [
+            'telecodex', 'telegram', 'cursor-codex', 'openclaw', 'bridge', 'watcher'
+        ])
         rows.append({
             'id': session_id,
-            'thread_name': item.get('thread_name') or '(sin título)',
+            'thread_name': thread_name,
             'updated_at': updated_at,
             'updated_ts': max(updated_ts, file_mtime),
             'file': str(file_path) if file_path else None,
+            'risky': risky,
         })
     rows.sort(key=lambda x: x.get('updated_ts', 0.0), reverse=True)
     return rows
@@ -66,6 +72,7 @@ def main():
             'thread_name': s['thread_name'],
             'updated_at': s['updated_at'],
             'file': s['file'],
+            'risky': s.get('risky', False),
         })
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(mapped, indent=2, ensure_ascii=False), encoding='utf-8')

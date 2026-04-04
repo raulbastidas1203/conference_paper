@@ -11,6 +11,7 @@ RUNTIME = BASE_DIR / 'runtime'
 SESSIONS_JSON = RUNTIME / 'codex_sessions.json'
 EVENTS = RUNTIME / 'events.jsonl'
 OUTBOX = RUNTIME / 'outbox.jsonl'
+DEDUP = RUNTIME / 'codex_dedup.json'
 LOGS = BASE_DIR / 'logs'
 CODEX_BIN = Path.home() / '.cursor' / 'extensions' / 'openai.chatgpt-26.325.31654-linux-x64' / 'bin' / 'linux-x86_64' / 'codex'
 WORKDIR = Path('/home/raul/CLAUDE/openclaw')
@@ -39,6 +40,19 @@ def resolve_session(alias: str):
     return None
 
 
+def load_dedup():
+    if DEDUP.exists():
+        try:
+            return json.loads(DEDUP.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    return {}
+
+
+def save_dedup(data):
+    DEDUP.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding='utf-8')
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument('--alias', required=True)
@@ -50,9 +64,17 @@ def main():
     if not sess:
         append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'No encontré la sesión {args.alias}. Usa /chats.'})
         return
+    if sess.get('risky'):
+        append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'Bloqueé {args.alias} porque parece una sesión sensible del bridge/setup.'})
+        return
 
     session_id = sess['id']
     thread_name = sess.get('thread_name', session_id)
+    dedup = load_dedup()
+    dedup_key = f"{args.chat_id}|{args.alias}|{args.text.strip()}"
+    if dedup.get(dedup_key):
+        append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'Omití reenvío duplicado a {args.alias}.'})
+        return
     append_jsonl(EVENTS, {'type': 'progress', 'text': f'Enviando mensaje a {args.alias}: {thread_name}'})
 
     if not CODEX_BIN.exists():
@@ -87,6 +109,10 @@ def main():
 
     append_jsonl(EVENTS, {'type': 'done', 'text': f'Respuesta recibida de {args.alias}: {thread_name}'})
     final_text = final_text.strip()
+    dedup[dedup_key] = True
+    if len(dedup) > 200:
+        dedup = dict(list(dedup.items())[-200:])
+    save_dedup(dedup)
     append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'{args.alias} · {thread_name}\n\n{final_text[:3500]}'})
 
 

@@ -1,0 +1,68 @@
+{
+  "1452407191": {
+    "alias": "C1",
+    "question": "Codex necesita una respuesta.",
+    "options": [],
+    "raw": {
+      "questions": [
+        {
+          "header": "Tipo",
+          "id": "trip_style",
+          "question": "¿Qué tipo de viaje te atrae más en este momento?",
+          "options": [
+            {
+              "label": "Descanso (Recommended)",
+              "description": "Priorizamos comodidad, ritmo tranquilo y pocas fricciones."
+            },
+            {
+              "label": "Aventura",
+              "description": "Priorizamos naturaleza, actividad y experiencias nuevas."
+            },
+            {
+              "label": "Ciudad y cultura",
+              "description": "Priorizamos comida, museos, barrios y vida urbana."
+            }
+          ]
+        },
+        {
+          "header": "Presupuesto",
+          "id": "budget_level",
+          "question": "¿Qué rango de gasto total te resulta más cómodo?",
+          "options": [
+            {
+              "label": "Medio (Recommended)",
+              "description": "Buscamos un viaje viable sin lujos, pero bien armado."
+            },
+            {
+              "label": "Ajustado",
+              "description": "Priorizamos destinos baratos, fechas flexibles y ahorro fuerte."
+            },
+            {
+              "label": "Amplio",
+              "description": "Podemos considerar destinos más caros o un viaje más largo."
+            }
+          ]
+        },
+        {
+          "header": "Fecha",
+          "id": "timing_flexibility",
+          "question": "¿Qué tan claro tienes cuándo viajar?",
+          "options": [
+            {
+              "label": "Flexible (Recommended)",
+              "description": "Primero elegimos destino y mejor ventana de tiempo."
+            },
+            {
+              "label": "Este año",
+              "description": "Diseñamos un plan para viajar en algún momento de este año."
+            },
+            {
+              "label": "Pronto",
+              "description": "Buscamos algo que puedas ejecutar en los próximos 1-3 meses."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

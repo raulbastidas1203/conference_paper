@@ -42,7 +42,23 @@ def save_state(state):
     STATE_PATH.write_text(json.dumps(state, indent=2))
 
 
+def load_dotenv():
+    env_path = BASE_DIR / '.env'
+    if not env_path.exists():
+        return
+    for raw in env_path.read_text(encoding='utf-8').splitlines():
+        line = raw.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        k, v = line.split('=', 1)
+        k = k.strip()
+        v = v.strip().strip('"').strip("'")
+        if k and v and k not in os.environ:
+            os.environ[k] = v
+
+
 def load_config():
+    load_dotenv()
     data = {}
     if CONFIG_PATH.exists():
         try:
@@ -50,7 +66,11 @@ def load_config():
         except Exception:
             data = {}
     token = os.getenv('CODEX_TELEGRAM_BOT_TOKEN') or os.getenv('TELECODEX_BOT_TOKEN') or data.get('botToken')
+    if token in (None, '', 'SET_VIA_ENV_OR_LOCAL_ONLY'):
+        token = None
     chat_id = os.getenv('CODEX_TELEGRAM_CHAT_ID') or os.getenv('TELECODEX_CHAT_ID') or data.get('chatId')
+    if chat_id in (None, '', 'SET_REAL_CHAT_ID'):
+        chat_id = None
     return token, str(chat_id) if chat_id else None
 
 
@@ -64,7 +84,10 @@ def tg_api(token, method, **params):
 def send_message(token, chat_id, text):
     if not token or not chat_id:
         return None
-    return tg_api(token, 'sendMessage', chat_id=chat_id, text=text)
+    try:
+        return tg_api(token, 'sendMessage', chat_id=chat_id, text=text)
+    except Exception:
+        return None
 
 
 def append_jsonl(path: Path, obj: dict):

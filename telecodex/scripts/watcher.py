@@ -11,11 +11,13 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 RUNTIME_DIR = BASE_DIR / 'runtime'
 EVENTS_PATH = RUNTIME_DIR / 'events.jsonl'
 INBOX_PATH = RUNTIME_DIR / 'inbox.jsonl'
+OUTBOX_PATH = RUNTIME_DIR / 'outbox.jsonl'
 STATE_PATH = RUNTIME_DIR / 'state.json'
 CONFIG_PATH = BASE_DIR / 'config' / 'telegram.settings.json'
 
 DEFAULT_STATE = {
     'last_event_line': 0,
+    'last_outbox_line': 0,
     'last_update_id': None,
     'last_notified_text': None,
 }
@@ -23,9 +25,9 @@ DEFAULT_STATE = {
 
 def ensure_runtime():
     RUNTIME_DIR.mkdir(parents=True, exist_ok=True)
-    for p in (EVENTS_PATH, INBOX_PATH):
+    for p in (EVENTS_PATH, INBOX_PATH, OUTBOX_PATH):
         if not p.exists():
-            p.write_text('')
+            p.write_text('\n')
     if not STATE_PATH.exists():
         STATE_PATH.write_text(json.dumps(DEFAULT_STATE, indent=2))
 
@@ -163,6 +165,32 @@ def process_updates(state, token, chat_id):
     return ingested
 
 
+def process_outbox(state, token):
+    if not token:
+        return 0
+    lines = OUTBOX_PATH.read_text(encoding='utf-8').splitlines()
+    start = state.get('last_outbox_line', 0)
+    new_lines = lines[start:]
+    sent = 0
+    for line in new_lines:
+        line = line.strip()
+        if not line:
+            state['last_outbox_line'] = state.get('last_outbox_line', 0) + 1
+            continue
+        try:
+            item = json.loads(line)
+        except Exception:
+            state['last_outbox_line'] = state.get('last_outbox_line', 0) + 1
+            continue
+        chat_id = item.get('chat_id')
+        text = item.get('text')
+        if chat_id and text:
+            send_message(token, chat_id, text)
+            sent += 1
+        state['last_outbox_line'] = state.get('last_outbox_line', 0) + 1
+    return sent
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--once', action='store_true')
@@ -175,6 +203,7 @@ def main():
     while True:
         process_events(state, token, chat_id)
         process_updates(state, token, chat_id)
+        process_outbox(state, token)
         save_state(state)
         if args.once:
             break

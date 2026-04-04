@@ -25,4 +25,12 @@ else
   echo "inbox sync pid: $(cat runtime/inbox_sync.pid)"
 fi
 
+if [ -f runtime/command_loop.pid ] && kill -0 "$(cat runtime/command_loop.pid)" 2>/dev/null; then
+  echo 'command loop ya está corriendo'
+else
+  nohup python3 scripts/command_loop.py --interval 3 > logs/command_loop.log 2>&1 &
+  echo $! > runtime/command_loop.pid
+  echo "command loop pid: $(cat runtime/command_loop.pid)"
+fi
+
 echo 'telecodex iniciado'

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-for name in watcher inbox_sync; do
+for name in watcher inbox_sync command_loop; do
   pidfile="runtime/${name}.pid"
   if [ -f "$pidfile" ]; then
     pid="$(cat "$pidfile")"

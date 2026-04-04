@@ -126,6 +126,10 @@ def process_events(state, token, chat_id):
             ev = json.loads(line)
         except Exception:
             ev = {'type': 'event', 'text': line}
+        ev_type = ev.get('type', 'event')
+        if ev_type == 'progress':
+            state['last_event_line'] = state.get('last_event_line', 0) + 1
+            continue
         text = summarize_event(ev)
         if text != state.get('last_notified_text'):
             send_message(token, chat_id, text)

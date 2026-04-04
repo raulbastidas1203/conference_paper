@@ -1,6 +1,1 @@
-{"ts": 1775267000, "type": "progress", "text": "telecodex inicializado"}
-{"ts": 1775269089, "type": "progress", "text": "Prueba telecodex: si ves esto, respóndele al bot con cualquier mensaje"}
-{"ts": 1775270020, "type": "progress", "text": "Iniciando: listar raíz openclaw", "command": ["ls", "-la", "/home/raul/CLAUDE/openclaw"]}
-{"ts": 1775270020, "type": "done", "text": "Completado: listar raíz openclaw", "returncode": 0, "duration_sec": 0.0, "stdout_tail": "l 7874 Tay   3 17:08 AGENTS.md\n-rw-rw-r-- 1 raul raul 1471 Tay   3 17:08 BOOTSTRAP.md\ndrwxrwxr-x 8 raul raul 4096 Tay   3 21:33 .git\n-rw-rw-r-- 1 raul raul  123 Tay   3 21:20 .gitignore\n-rw-rw-r-- 1 raul raul  193 Tay   3 17:08 HEARTBEAT.md\n-rw-rw-r-- 1 raul raul  636 Tay   3 17:08 IDENTITY.md\ndrwxrwxr-x 2 raul raul 4096 Tay   3 17:08 .openclaw\ndrwxrwxr-x 2 raul raul 4096 Tay   3 17:12 openclaw\n-rw-rw-r-- 1 raul raul 1673 Tay   3 17:08 SOUL.md\ndrwxrwxr-x 8 raul raul 4096 Tay   3 21:17 telecodex\n-rw-rw-r-- 1 raul raul  860 Tay   3 17:08 TOOLS.md\n-rw-rw-r-- 1 raul raul  477 Tay   3 17:08 USER.md"}
-{"type": "progress", "text": "Enviando mensaje a C2: Explica uso del repo"}
-{"type": "error", "text": "Falló envío a C2", "stderr_tail": "error: unexpected argument '-C' found\n\n  tip: to pass '-C' as a value, use '-- -C'\n\nUsage: codex exec resume [OPTIONS] [SESSION_ID] [PROMPT]\n\nFor more information, try '--help'."}
+{"ts": 1775271700, "type": "event", "text": "telecodex limpio y reiniciado"}

@@ -1,17 +1,17 @@
 [
   {
     "alias": "C1",
-    "id": "019d560a-516c-70c1-b744-6fe487976457",
-    "thread_name": "Buscar SOTA loco-manipulación",
-    "updated_at": "2026-04-04T01:10:28.484647676Z",
-    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-10-10-019d560a-516c-70c1-b744-6fe487976457.jsonl"
-  },
-  {
-    "alias": "C2",
     "id": "019d5609-5bbb-7dd2-b676-06bcea36bdef",
     "thread_name": "Explica uso del repo",
     "updated_at": "2026-04-04T01:09:18.818573005Z",
     "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-09-07-019d5609-5bbb-7dd2-b676-06bcea36bdef.jsonl"
+  },
+  {
+    "alias": "C2",
+    "id": "019d560a-516c-70c1-b744-6fe487976457",
+    "thread_name": "Buscar SOTA loco-manipulación",
+    "updated_at": "2026-04-04T01:10:28.484647676Z",
+    "file": "/home/raul/.codex/sessions/2026/04/03/rollout-2026-04-03T20-10-10-019d560a-516c-70c1-b744-6fe487976457.jsonl"
   },
   {
     "alias": "C3",

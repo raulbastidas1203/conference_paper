@@ -74,8 +74,9 @@ def main():
 
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or 'sin detalle').strip()[-1200:]
-        append_jsonl(EVENTS, {'type': 'error', 'text': f'Falló envío a {args.alias}', 'stderr_tail': tail})
-        append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'Falló enviar a {args.alias}.\n\n{tail}'})
+        clean_tail = '\n'.join([ln for ln in tail.splitlines() if ln.strip()])
+        append_jsonl(EVENTS, {'type': 'error', 'text': f'Falló envío a {args.alias}', 'stderr_tail': clean_tail})
+        append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'Falló enviar a {args.alias}.\n\n{clean_tail}'})
         return
 
     final_text = ''
@@ -85,6 +86,7 @@ def main():
         final_text = 'Mensaje enviado a Codex, pero no capturé respuesta final todavía.'
 
     append_jsonl(EVENTS, {'type': 'done', 'text': f'Respuesta recibida de {args.alias}: {thread_name}'})
+    final_text = final_text.strip()
     append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'{args.alias} · {thread_name}\n\n{final_text[:3500]}'})
 
 

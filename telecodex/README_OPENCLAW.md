@@ -102,6 +102,25 @@ python scripts/watcher.py --once
 python scripts/watcher.py --interval 3
 ```
 
+O con el helper:
+
+```bash
+bash scripts/run_watcher.sh
+```
+
+### Probar ida y vuelta
+
+```bash
+bash scripts/test_roundtrip.sh
+```
+
+Luego responde al bot y corre:
+
+```bash
+python scripts/watcher.py --once
+cat runtime/inbox.jsonl
+```
+
 ### Leer inbox entrante
 
 ```bash

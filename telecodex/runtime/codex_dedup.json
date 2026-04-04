@@ -3,5 +3,6 @@
   "1452407191|C3|crea una carpeta “.test” luego crea un .md “test” y luego escribe en ese archivo “pong”": true,
   "1452407191|C1|solo dime : hola": true,
   "1452407191|C1|crea un archivo test.txt": true,
-  "1452407191|C1|... crea un archivo test.txt": true
+  "1452407191|C1|... crea un archivo test.txt": true,
+  "1452407191|C1|crea un archivo test.md": true
 }

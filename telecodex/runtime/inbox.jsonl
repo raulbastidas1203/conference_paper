@@ -34,3 +34,6 @@
 {"ts": 1775274771, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 70, "text": "/chats"}
 {"ts": 1775274809, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 72, "text": "/codex C1 ... crea un archivo test.txt"}
 {"ts": 1775274827, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 74, "text": "si"}
+{"ts": 1775275218, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 77, "text": "/chats"}
+{"ts": 1775275297, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 79, "text": "/codex C1 --cwd /home/raul/Documents crea un archivo test.md"}
+{"ts": 1775275309, "source": "telegram", "chat_id": "1452407191", "from": "darin1203", "message_id": 81, "text": "Sí"}

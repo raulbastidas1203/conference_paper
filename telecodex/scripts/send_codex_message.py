@@ -97,11 +97,22 @@ def main():
     proc = subprocess.run(cmd, input=args.text, text=True, capture_output=True)
 
     processing_key = f'processing:{args.chat_id}'
+    state_path = RUNTIME / 'state.json'
+    processing_message_id = None
+    if state_path.exists():
+        try:
+            state_obj = json.loads(state_path.read_text(encoding='utf-8'))
+            processing_message_id = state_obj.get(processing_key)
+        except Exception:
+            processing_message_id = None
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or 'sin detalle').strip()[-1200:]
         clean_tail = '\n'.join([ln for ln in tail.splitlines() if ln.strip()])
         append_jsonl(EVENTS, {'type': 'error', 'text': f'Falló envío a {args.alias}', 'stderr_tail': clean_tail})
-        append_jsonl(OUTBOX, {'kind': 'edit', 'chat_id': args.chat_id, 'message_id': processing_key, 'text': f'Falló enviar a {args.alias}.\n\n{clean_tail}'})
+        if processing_message_id:
+            append_jsonl(OUTBOX, {'kind': 'edit', 'chat_id': args.chat_id, 'message_id': processing_message_id, 'text': f'Falló enviar a {args.alias}.\n\n{clean_tail}'})
+        else:
+            append_jsonl(OUTBOX, {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'Falló enviar a {args.alias}.\n\n{clean_tail}'})
         return
 
     final_text = ''
@@ -116,7 +127,10 @@ def main():
     if len(dedup) > 200:
         dedup = dict(list(dedup.items())[-200:])
     save_dedup(dedup)
-    append_jsonl(OUTBOX, {'kind': 'edit', 'chat_id': args.chat_id, 'message_id': processing_key, 'text': f'{args.alias} · {thread_name}\n\n{final_text[:3500]}'})
+    payload = {'kind': 'reply', 'chat_id': args.chat_id, 'text': f'{args.alias} · {thread_name}\n\n{final_text[:3500]}'}
+    if processing_message_id:
+        payload = {'kind': 'edit', 'chat_id': args.chat_id, 'message_id': processing_message_id, 'text': f'{args.alias} · {thread_name}\n\n{final_text[:3500]}'}
+    append_jsonl(OUTBOX, payload)
 
 
 if __name__ == '__main__':

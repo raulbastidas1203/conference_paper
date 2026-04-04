@@ -148,12 +148,21 @@ def handle_command(text: str):
             return 'Uso: /codex C1 tu mensaje'
         alias = parts[1].strip().upper()
         message = parts[2].strip()
+        forced_cwd = None
+        if message.startswith('--cwd '):
+            try:
+                rest = message[6:]
+                forced_cwd, message = rest.split(' ', 1)
+                forced_cwd = forced_cwd.strip()
+                message = message.strip()
+            except ValueError:
+                return 'Uso: /codex C1 --cwd /ruta tu mensaje'
         sess = resolve_codex_session(alias)
         if not sess:
             return f'No encontré la sesión {alias}. Usa /chats.'
         if sess.get('risky'):
             return f'Bloqueé {alias} porque parece una sesión sensible del bridge/setup. Usa otra sesión.'
-        cwd = sess.get('cwd') or '(cwd no detectado)'
+        cwd = forced_cwd or sess.get('cwd') or '(cwd no detectado)'
         return {'action': 'codex_prepare', 'alias': alias, 'message': message, 'cwd': cwd}
 
     return None
@@ -204,7 +213,8 @@ def main():
                 append(OUTBOX, {
                     'kind': 'reply',
                     'chat_id': chat_id,
-                    'text': f"Procesando {action['alias']}...",
+                    'text': 'Procesando...',
+                    'store_as': f'processing:{chat_id}',
                 })
                 subprocess.run([
                     sys.executable,

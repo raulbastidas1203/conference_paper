@@ -77,9 +77,12 @@ def load_config():
     return token, str(chat_id) if chat_id else None
 
 
-def tg_api(token, method, **params):
+def tg_api(token, method, http_method='get', **params):
     url = f'https://api.telegram.org/bot{token}/{method}'
-    r = requests.get(url, params=params, timeout=30)
+    if http_method == 'post':
+        r = requests.post(url, data=params, timeout=30)
+    else:
+        r = requests.get(url, params=params, timeout=30)
     r.raise_for_status()
     return r.json()
 
@@ -95,7 +98,16 @@ def send_message(token, chat_id, text, keyboard=None):
             'one_time_keyboard': True,
         }, ensure_ascii=False)
     try:
-        return tg_api(token, 'sendMessage', **params)
+        return tg_api(token, 'sendMessage', http_method='post', **params)
+    except Exception:
+        return None
+
+
+def edit_message(token, chat_id, message_id, text):
+    if not token or not chat_id or not message_id:
+        return None
+    try:
+        return tg_api(token, 'editMessageText', http_method='post', chat_id=chat_id, message_id=message_id, text=text)
     except Exception:
         return None
 
@@ -202,8 +214,14 @@ def process_outbox(state, token):
         chat_id = item.get('chat_id')
         text = item.get('text')
         keyboard = item.get('keyboard')
-        if chat_id and text:
-            send_message(token, chat_id, text, keyboard=keyboard)
+        if item.get('kind') == 'edit' and chat_id and text and item.get('message_id'):
+            edit_message(token, chat_id, item.get('message_id'), text)
+            sent += 1
+        elif chat_id and text:
+            resp = send_message(token, chat_id, text, keyboard=keyboard)
+            if item.get('store_as') and resp and isinstance(resp, dict):
+                result = resp.get('result') or {}
+                state[item['store_as']] = result.get('message_id')
             sent += 1
         state['last_outbox_line'] = state.get('last_outbox_line', 0) + 1
     return sent

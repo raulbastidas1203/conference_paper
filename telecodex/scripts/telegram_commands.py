@@ -274,12 +274,28 @@ def main():
                         append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': '\n'.join(lines)[:3500], 'keyboard': keyboard})
                     else:
                         lines = [f"Respuestas capturadas para {ui.get('alias')}:\n"]
+                        answer_lines = []
                         for ans in ui.get('answers', []):
                             lines.append(f"- {ans['header']}: {ans['label']}")
                             if ans.get('description'):
                                 lines.append(f"  {ans['description']}")
-                        lines.append('\nAún falta reenviar este paquete de respuestas al hilo correcto de Codex.')
+                            answer_lines.append(f"{ans['header']}: {ans['label']}")
                         append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': '\n'.join(lines)[:3500]})
+
+                        resume_text = "Respuestas del cuestionario:\n" + '\n'.join(answer_lines) + "\n\nContinúa usando estas respuestas."
+                        append(OUTBOX, {
+                            'kind': 'reply',
+                            'chat_id': chat_id,
+                            'text': 'Reenviando respuestas al hilo de Codex...',
+                            'store_as': f'processing:{chat_id}',
+                        })
+                        subprocess.run([
+                            sys.executable,
+                            str(SEND_CODEX),
+                            '--alias', ui.get('alias'),
+                            '--text', resume_text,
+                            '--chat-id', chat_id,
+                        ], check=False)
                         pending_ui.pop(chat_id, None)
                         save_pending_ui(pending_ui)
                     state['last_inbox_line'] += 1

@@ -67,7 +67,15 @@ def extract_tail_events(file_path: Path, start_line: int):
             ptype = payload.get('type')
             if ptype in ('custom_tool_call', 'function_call'):
                 name = payload.get('name') or payload.get('namespace') or 'tool'
-                events.append({'kind': 'tool_call', 'name': name, 'timestamp': obj.get('timestamp')})
+                raw = json.dumps(payload, ensure_ascii=False)
+                if any(k in raw.lower() for k in ['approve', 'approval', 'confirm', 'run this command', 'allow once', 'permission']):
+                    events.append({'kind': 'needs_decision', 'name': name, 'raw': raw[:1600], 'timestamp': obj.get('timestamp')})
+                else:
+                    events.append({'kind': 'tool_call', 'name': name, 'timestamp': obj.get('timestamp')})
+            elif ptype == 'message':
+                raw = json.dumps(payload, ensure_ascii=False)
+                if any(k in raw.lower() for k in ['approve', 'approval', 'confirm', 'run this command', 'allow once', 'permission']):
+                    events.append({'kind': 'needs_decision', 'name': 'message', 'raw': raw[:1600], 'timestamp': obj.get('timestamp')})
     return {'events': events, 'line_count': len(lines), 'last_completed': last_completed}
 
 
@@ -94,6 +102,8 @@ def tick():
                 append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} · progreso:\n\n{ev["message"][:1200]}'})
             elif ev['kind'] == 'tool_call':
                 append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} está usando: {ev["name"]}'})
+            elif ev['kind'] == 'needs_decision':
+                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} está esperando una decisión o aprobación.\n\nDetalle:\n{ev["raw"][:1400]}'})
             elif ev['kind'] == 'task_complete':
                 mon['last_completed'] = ev.get('timestamp')
                 changed = True

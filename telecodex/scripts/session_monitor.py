@@ -40,29 +40,35 @@ def resolve(alias: str):
     return None
 
 
-def extract_last_status(file_path: Path):
+def extract_tail_events(file_path: Path, start_line: int):
     if not file_path.exists():
         return None
     lines = file_path.read_text(encoding='utf-8', errors='replace').splitlines()
+    new_lines = lines[start_line:]
+    events = []
     last_completed = None
-    agent_messages = []
-    for line in reversed(lines[-120:]):
+    for line in new_lines:
         try:
             obj = json.loads(line)
         except Exception:
             continue
         t = obj.get('type')
         payload = obj.get('payload') or {}
-        if t == 'event_msg' and payload.get('type') in ('turn_completed', 'task_complete') and not last_completed:
-            last_completed = obj.get('timestamp')
-        if t == 'event_msg' and payload.get('type') == 'agent_message':
+        if t == 'event_msg' and payload.get('type') == 'task_started':
+            events.append({'kind': 'task_started', 'timestamp': obj.get('timestamp')})
+        elif t == 'event_msg' and payload.get('type') == 'agent_message':
             msg = payload.get('message')
             if msg:
-                agent_messages.append(msg)
-        if last_completed and len(agent_messages) >= 3:
-            break
-    agent_messages.reverse()
-    return {'last_completed': last_completed, 'agent_messages': agent_messages[-3:], 'line_count': len(lines)}
+                events.append({'kind': 'agent_message', 'message': msg, 'timestamp': obj.get('timestamp')})
+        elif t == 'event_msg' and payload.get('type') in ('turn_completed', 'task_complete'):
+            last_completed = obj.get('timestamp')
+            events.append({'kind': 'task_complete', 'message': payload.get('last_agent_message'), 'timestamp': obj.get('timestamp')})
+        elif t == 'response_item':
+            ptype = payload.get('type')
+            if ptype in ('custom_tool_call', 'function_call'):
+                name = payload.get('name') or payload.get('namespace') or 'tool'
+                events.append({'kind': 'tool_call', 'name': name, 'timestamp': obj.get('timestamp')})
+    return {'events': events, 'line_count': len(lines), 'last_completed': last_completed}
 
 
 def tick():
@@ -73,25 +79,28 @@ def tick():
         sess = resolve(alias)
         if not sess or not sess.get('file'):
             continue
-        status = extract_last_status(Path(sess['file']))
+        prev_lines = mon.get('line_count', 0)
+        status = extract_tail_events(Path(sess['file']), prev_lines)
         if not status:
             continue
-        prev_completed = mon.get('last_completed')
-        prev_lines = mon.get('line_count', 0)
-        now_completed = status.get('last_completed')
-        now_lines = status.get('line_count', 0)
-        if now_lines != prev_lines:
-            mon['line_count'] = now_lines
+        events = status.get('events') or []
+        if status.get('line_count', 0) != prev_lines:
+            mon['line_count'] = status['line_count']
             changed = True
-        if now_completed and now_completed != prev_completed:
-            mon['last_completed'] = now_completed
-            changed = True
-            text = f"{alias} terminó de trabajar."
-            msgs = status.get('agent_messages') or []
-            if msgs:
-                preview = '\n\n'.join(msgs[-3:])
-                text += f"\n\nMensajes recientes:\n{preview[:2000]}"
-            append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': text})
+        for ev in events:
+            if ev['kind'] == 'task_started':
+                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} recibió un nuevo prompt y empezó a trabajar.'})
+            elif ev['kind'] == 'agent_message':
+                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} · progreso:\n\n{ev["message"][:1200]}'})
+            elif ev['kind'] == 'tool_call':
+                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} está usando: {ev["name"]}'})
+            elif ev['kind'] == 'task_complete':
+                mon['last_completed'] = ev.get('timestamp')
+                changed = True
+                text = f'{alias} terminó de trabajar.'
+                if ev.get('message'):
+                    text += f'\n\nRespuesta final:\n{ev["message"][:1800]}'
+                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': text})
     if changed:
         save_json(MONITORS, monitors)
 

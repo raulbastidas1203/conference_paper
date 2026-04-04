@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 
 import requests
+from requests import HTTPError
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 RUNTIME_DIR = BASE_DIR / 'runtime'
@@ -145,7 +146,12 @@ def process_updates(state, token, chat_id):
     params = {}
     if state.get('last_update_id') is not None:
         params['offset'] = int(state['last_update_id']) + 1
-    data = tg_api(token, 'getUpdates', **params)
+    try:
+        data = tg_api(token, 'getUpdates', **params)
+    except HTTPError as e:
+        if getattr(e.response, 'status_code', None) == 409:
+            return 0
+        raise
     updates = data.get('result', [])
     ingested = 0
     for upd in updates:

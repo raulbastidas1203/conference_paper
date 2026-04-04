@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[1]
@@ -7,6 +9,7 @@ RUNTIME = BASE_DIR / 'runtime'
 SESSIONS_JSON = RUNTIME / 'codex_sessions.json'
 MONITORS = RUNTIME / 'session_monitors.json'
 OUTBOX = RUNTIME / 'outbox.jsonl'
+REQUEST_UI = BASE_DIR / 'scripts' / 'request_ui.py'
 
 
 def append(path: Path, obj: dict):
@@ -109,7 +112,9 @@ def tick():
             elif ev['kind'] == 'needs_decision':
                 append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} está esperando una decisión o aprobación.\n\nDetalle:\n{ev["raw"][:1400]}'})
             elif ev['kind'] == 'needs_user_reply':
-                append(OUTBOX, {'kind': 'reply', 'chat_id': chat_id, 'text': f'{alias} te está pidiendo respuesta.\n\nPregunta / opciones:\n{ev["raw"][:1400]}\n\nRespóndeme aquí y luego conectamos esa respuesta al hilo.'})
+                subprocess.run([sys.executable, str(REQUEST_UI)], check=False)
+                from request_ui import emit_request
+                emit_request(str(chat_id), alias, ev['raw'])
             elif ev['kind'] == 'task_complete':
                 mon['last_completed'] = ev.get('timestamp')
                 changed = True

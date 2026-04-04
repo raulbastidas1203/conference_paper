@@ -1,0 +1,122 @@
+[
+  {
+    "alias": "C1",
+    "id": "019c3dc1-9754-7c00-a6e2-5be3d61a7212",
+    "thread_name": "Construir asistente local de recorda",
+    "updated_at": "2026-03-07T01:41:38.84091595Z"
+  },
+  {
+    "alias": "C2",
+    "id": "019c44c7-ecc5-7482-b33c-9e6846974533",
+    "thread_name": "Mover pestañas Codex",
+    "updated_at": "2026-03-07T01:41:38.842596887Z"
+  },
+  {
+    "alias": "C3",
+    "id": "019c44de-db5a-77b0-a081-1a5db29448db",
+    "thread_name": "Redactar memo inversión Aaron",
+    "updated_at": "2026-03-07T01:41:38.844043869Z"
+  },
+  {
+    "alias": "C4",
+    "id": "019c7876-b0b5-7123-be23-b33bed79eba8",
+    "thread_name": "Clonar repos y crear runbook xr",
+    "updated_at": "2026-03-07T01:41:38.845241913Z"
+  },
+  {
+    "alias": "C5",
+    "id": "019c78c9-f3f4-7712-9bc8-876fe94a97fc",
+    "thread_name": "Actualizar repo mediante git pull",
+    "updated_at": "2026-03-07T01:41:38.846722703Z"
+  },
+  {
+    "alias": "C6",
+    "id": "019c8ca2-62fa-7810-ac84-1e0966f6cb78",
+    "thread_name": "Instala Live Server para HTML",
+    "updated_at": "2026-03-07T01:41:38.847907689Z"
+  },
+  {
+    "alias": "C7",
+    "id": "019c9010-a8f7-7f93-a901-f8633a2a1adf",
+    "thread_name": "Push cambios UCV a GitHub",
+    "updated_at": "2026-03-07T01:41:38.849239802Z"
+  },
+  {
+    "alias": "C8",
+    "id": "019c9048-9872-7e23-a811-196b517a7fe6",
+    "thread_name": "Explicar cómo ver videos locales",
+    "updated_at": "2026-03-07T01:41:38.850452444Z"
+  },
+  {
+    "alias": "C9",
+    "id": "019c967f-73ad-7bd0-ba51-7e4555006a2f",
+    "thread_name": "Actualizar repo y pasar HTML v3 appt",
+    "updated_at": "2026-03-07T01:41:38.851640651Z"
+  },
+  {
+    "alias": "C10",
+    "id": "019cbbcb-08b0-7793-b38c-79156391820c",
+    "thread_name": "Revisa errores al clonar repo",
+    "updated_at": "2026-03-07T01:41:38.852846059Z"
+  },
+  {
+    "alias": "C11",
+    "id": "019cc921-20b5-77a2-93e6-69c20c62868b",
+    "thread_name": "Planificar control MuJoCo XR Dex3",
+    "updated_at": "2026-03-07T16:31:42.364397279Z"
+  },
+  {
+    "alias": "C12",
+    "id": "019cc976-e59c-7ac3-8150-6a99b0c78957",
+    "thread_name": "Configurar fork GR00T Meta Quest 3",
+    "updated_at": "2026-03-07T18:02:26.241545761Z"
+  },
+  {
+    "alias": "C13",
+    "id": "019ccb65-377b-7d93-bf91-60219679c121",
+    "thread_name": "Sube repositorio a GitHub",
+    "updated_at": "2026-03-08T03:03:04.293384182Z"
+  },
+  {
+    "alias": "C14",
+    "id": "019ccb99-bdf1-7a12-9f6e-95611550c937",
+    "thread_name": "Prepare repo for GitHub upload",
+    "updated_at": "2026-03-08T04:00:12.973004119Z"
+  },
+  {
+    "alias": "C15",
+    "id": "019ce45f-8f1e-7fd0-8e40-dac0306669dc",
+    "thread_name": "Clona TWIST2 y sigue guía",
+    "updated_at": "2026-03-12T23:28:55.391656132Z"
+  },
+  {
+    "alias": "C16",
+    "id": "019ce4c6-3241-7221-93a9-34d43b0cdc9d",
+    "thread_name": "Clona y prepara TWIST2 completo",
+    "updated_at": "2026-03-13T01:22:18.048519481Z"
+  },
+  {
+    "alias": "C17",
+    "id": "019ce4fd-aa1e-72a0-a135-f97b4fbe5289",
+    "thread_name": "Clonar repo y preparar Quest 3",
+    "updated_at": "2026-03-13T02:23:41.413872853Z"
+  },
+  {
+    "alias": "C18",
+    "id": "019ce7e4-d168-7372-8d27-45577b50b515",
+    "thread_name": "Clona e instala repo NVIDIA SONIC",
+    "updated_at": "2026-03-13T15:54:29.111342373Z"
+  },
+  {
+    "alias": "C19",
+    "id": "019ce98e-564f-7110-a840-d98bd2c34acf",
+    "thread_name": "Habilita stream cámara Unitree G1",
+    "updated_at": "2026-03-13T23:35:51.492602217Z"
+  },
+  {
+    "alias": "C20",
+    "id": "019ce9bd-d866-7bf1-be5b-0a7d46c9e556",
+    "thread_name": "Verifica instalación repo teleimager",
+    "updated_at": "2026-03-14T00:27:57.736359036Z"
+  }
+]

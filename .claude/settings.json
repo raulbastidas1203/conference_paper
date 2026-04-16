@@ -3,6 +3,11 @@
     "allow": [
       "WebFetch(*)",
       "WebSearch(*)",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
       "Bash(mkdir:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
@@ -18,7 +23,17 @@
       "Bash(pdfinfo:*)",
       "Bash(python3:*)",
       "Bash(python:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git checkout:*)",
+      "Bash(git branch:*)"
     ],
     "deny": [
       "Bash(rm -rf:*)",

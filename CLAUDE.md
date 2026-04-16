@@ -251,7 +251,7 @@ Key invariants (abbreviated):
 **Siempre que se complete trabajo en este repo:**
 1. Commitear los cambios con mensaje descriptivo
 2. Pushear al branch de trabajo (`claude/...` o feature branch)
-3. Crear un PR a `master` usando el GitHub MCP tool (`mcp__github__create_pull_request`)
+3. Crear un PR a `main` usando el GitHub MCP tool (`mcp__github__create_pull_request`)
    - `owner`: `raulbastidas1203`, `repo`: `conference-darin`, `base`: `main`
    - Incluir en el body: qué cambió, por qué, y test plan
 4. No hacer merge sin aprobación explícita del usuario
